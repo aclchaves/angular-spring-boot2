@@ -1,0 +1,55 @@
+<form class="needs-validation" novalidate [formGroup]="form" style="padding-top: 10px">
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="name">Name</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                id="name" 
+                placeholder="Product name"
+                formControlName="name"
+                [ngClass]="{'is-invalid': submitted && hasError('name')}"
+            >
+            <div class="invalid-feedback" *ngIf="hasError('name') && hasError('name')['required']">
+                Please, enter a product name
+            </div>
+            <div class="invalid-feedback" *ngIf="hasError('name') && hasError('name')['minlength']">
+                Product name need at least {{ hasError('name')['minlength'].requiredLength }} characters
+            </div>
+            <div class="invalid-feedback" *ngIf="hasError('name') && hasError('name')['maxlength']">
+                Product name need maximum {{ hasError('name')['maxlength'].requiredLength }} characters
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="description">Description</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                id="description" 
+                placeholder="Product description"
+                formControlName="description"
+            >
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="price">Price</label>
+            <input 
+                type="number" 
+                class="form-control" 
+                id="price" 
+                placeholder="Product price"
+                value=1.00
+                formControlName="price"
+            >
+        </div>
+    </div>
+    <div style="margin-top: 10px">
+        <button type="submit" class="btn btn-primary" (click)="onSubmit()" >Save</button>
+        {{ ' ' }}
+        <button type="button" class="btn btn-light" (click)="onCancel()" > Cancel</button>
+    </div>
+</form>
+

@@ -1,0 +1,44 @@
+
+<div class="card">
+    <div class="card-header">
+        <div class="float-left">
+            <h4>Products</h4>
+        </div>
+        <div class="float-right">
+            <button type="button" class="btn btn-primary" [routerLink]="['new']" routerLinkActive="router-link-active" >New Product</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products">
+                    <td> {{ product.id }} </td>
+                    <td> {{ product.name }} </td>
+                    <td>
+                        <span class="float-right">
+                            <button type="button" class="btn btn-outline-info mg-1 btn-sm">
+                                Details
+                            </button>
+                            {{ ' ' }}
+                            <button class="btn btn-outline-warning btn-sm" (click)="onEdit(product.id)">
+                                Edit
+                            </button>
+                            {{ ' ' }}
+                            <button class="btn btn-outline-danger btn-sm">
+                                Delete
+                            </button>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+
