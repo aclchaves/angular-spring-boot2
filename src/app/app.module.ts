@@ -16,6 +16,8 @@ import { TokenInterceptorService } from '../app/auth/token-interceptor.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProductsModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule
   ],
   providers: [AuthService, AuthGuard, {
     provide: HTTP_INTERCEPTORS,

@@ -1,23 +1,57 @@
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Edit Product</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
+        </button>
     </div>
-  </div>
+    <div class="modal-body">
+        <div class="card">
+            <div class="card-header">
+                <div class="float-left">
+                    <!--<h4>New Product</h4>-->
+                    <div class="card-body">
+                        <!--<form class="needs-validation" novalidate [formGroup]="productForm" style="padding-top: 10px">-->
+                        <form [formGroup]="productForm" (ngSubmit)="updateForm()" fxLayout="column"
+                            fxLayoutAlign="space-between" style="padding-top: 10px; column-width: 650px;"
+                            onshow="findById(_id)">
+                            <input id="updateId" type="hidden" formControlName="_id" />
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Product name"
+                                        formControlName="name" [(ngModel)]="prodName"
+                                        [ngClass]="{'is-invalid': submitted && hasError('name')}">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="description">Description</label>
+                                    <input type="text" class="form-control" id="description"
+                                        placeholder="Product description" [(ngModel)]="prodDescription"
+                                        formControlName="description">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="price">Price</label>
+                                    <input type="number" class="form-control" id="price" placeholder="Product price"
+                                        value=1.00 [(ngModel)]="prodPrice" formControlName="price">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark"
+                    (click)="updateForm(_id);modal.close('Save click')">Save</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
 
 <div class="card">
     <div class="card-header">
@@ -53,7 +87,7 @@
                                 Details
                             </button>-->
                             {{ ' ' }}
-                            <button class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#exampleModal">
+                            <button class="btn btn-outline-warning btn-sm" (click)="editProduct(product);open(mymodal)">
                                 Edit
                             </button>
                             {{ ' ' }}
@@ -67,3 +101,6 @@
         </table>
     </div>
 </div>
+
+
+    

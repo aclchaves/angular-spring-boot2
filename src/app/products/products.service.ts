@@ -50,6 +50,7 @@ export class ProductsService {
   }
 
   update(prod: Product){
+    console.log(prod);
     return this.http.put(`${this.API}/${prod.id}`, prod, this.httpOptions).pipe(take(1));
   }
 
