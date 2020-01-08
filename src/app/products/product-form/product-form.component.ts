@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ProductsService } from './../products.service';
+import { Product } from '../../dto/product';
 
 @Component({
   selector: 'app-product-form',
@@ -11,7 +12,21 @@ import { ProductsService } from './../products.service';
 })
 export class ProductFormComponent implements OnInit {
 
-  form: FormGroup;
+  prodName: String = '';
+  prodDescription: String = '';
+  prodPrice: number;
+  prodImgUrl: String = '';
+
+  editProd: Product = null;
+
+  productForm: FormGroup =  this.fb.group({
+    _id: [null],
+    name: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(20)]],
+    description: ['',[Validators.required, Validators.minLength(20), Validators.maxLength(254)]],
+    price: 0,
+    imgUrl: '',
+  });
+
   submitted = false;
 
   constructor(
@@ -23,28 +38,23 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit() {
 
-    // Tenta capiturar o id que está sendo passado
-    this.route.params.subscribe(
-      (params: any) => {
-        const id = params['id'];
-        console.log(id);
-        const product$ = this.service.findById(id);
-        product$.subscribe(product => {
-          this.updateForm(product);
-        });
-      }
-    );
-
-    this.form = this.fb.group({
-      id: [null], // Insere essa linha para edição do formulário
-      name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(120)]],
-      description: [null, Validators.maxLength(300)],
-      price: [null, Validators.required]
-    });
   }
 
+  saveProduct() {
+    if (this.productForm.valid) {
+      this.service.insert({name: this.prodName,
+           description: this.prodDescription,
+           price: this.prodPrice,
+           imgUrl: this.prodImgUrl})
+         .subscribe((product) => {
+          window.alert('Product was insert with success.');           
+           this.router.navigate(['/products']);
+         })       
+    }
+ }
+
   updateForm(product) {
-    this.form.patchValue({
+    this.productForm.patchValue({
       id: product.id,
       name: product.name,
       description: product.description,
@@ -53,15 +63,15 @@ export class ProductFormComponent implements OnInit {
   }
 
   hasError(field: string) {
-    return this.form.get(field).errors;
+    return this.productForm.get(field).errors;
   }
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.form.value);
-    if (this.form.valid) {
+    console.log(this.productForm.value);
+    if (this.productForm.valid) {
       console.log('submit');
-      this.service.insert(this.form.value).subscribe(
+      this.service.insert(this.productForm.value).subscribe(
         success => {
           console.log('success');
           window.alert('Product was insert with success.');
@@ -79,7 +89,7 @@ export class ProductFormComponent implements OnInit {
 
   onCancel() {
     this.submitted = false;
-    this.form.reset();
+    this.productForm.reset();
   }
 
 }

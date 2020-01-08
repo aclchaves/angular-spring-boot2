@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Product } from '../dto/product';
-import { Observable, BehaviorSubject, throwError, pipe } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
-
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { tap, take } from 'rxjs/operators';
 
 
 @Injectable({
@@ -42,7 +41,16 @@ export class ProductsService {
   }
   
   insert(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.API, product, this.httpOptions);
+    console.log(this.httpOptions);
+    return this.http.post<Product>(this.API, product, this.httpOptions);    
+  }
+
+  remove(id) {
+    return this.http.delete(`${this.API}/${id}`, this.httpOptions);
+  }
+
+  update(prod: Product){
+    return this.http.put(`${this.API}/${prod.id}`, prod, this.httpOptions).pipe(take(1));
   }
 
   handleError(error: HttpErrorResponse) {

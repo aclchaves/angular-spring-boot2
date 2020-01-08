@@ -1,0 +1,58 @@
+<div class="card">
+    <div class="card-header">
+        <div class="float-left">
+            <h4>Login</h4>
+            <div class="card-body">                
+                <form style="padding-top: 10px">
+                    <div class="form-row">
+                        <div class="col-md-10 mb-5">
+                            <label>E-mail</label>
+                            <!--<input 
+                    type="text"                      
+                    id="email"                    
+                    placeholder="E-mail"                                       
+                    id ="email">-->
+                            <input
+                                placeholder="E-mail"
+                                type="text"
+                                class="form-control"                                
+                                required
+                                name="email"
+                                id="email"
+                                ngModel
+                                  [(ngModel)]="userLogin.email"                                  
+                                  #email="ngModel">
+                            <div *ngIf="email.invalid">Digite o e-mail</div>
+                            <!--<div matSuffix>email</div>-->
+                            <label>Senha</label>
+                            <input 
+                                placeholder="Senha"
+                                type="password"
+                                class="form-control"
+                                required
+                                minlength="6"
+                                name="password"
+                                id="password"
+                                ngModel
+                                 [(ngModel)]="userLogin.password"
+                                #password="ngModel">
+                            <div *ngIf="password.errors && password.errors.required">
+                                Digite a senha
+                            </div>
+                            <div *ngIf="password.errors && password.errors.minlength">
+                                Password must be of length 6
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--</div>-->
+                    <div style="margin-top: 10px">
+                        <button type="login-button" class="btn btn-primary" (click)="login()">Sign Up</button>
+                        {{ ' ' }}
+                        <button type="button" class="btn btn-light" (click)="cancel()"> Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>    
+    </div>
+</div>
